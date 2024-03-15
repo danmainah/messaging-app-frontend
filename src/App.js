@@ -13,8 +13,8 @@ function App() {
     });
   }, []);
   useEffect(() => {
-    const pusher = new Pusher("9exxxxxxxxxxxx", {
-      cluster: "ap2",
+    const pusher = new Pusher("af27ca8507d496db2ade", {
+      cluster: "eu",
     });
     const channel = pusher.subscribe("messages");
     channel.bind("inserted", (data) => {

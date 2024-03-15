@@ -8,8 +8,21 @@ import {
 } from "@mui/icons-material";
 import MicIcon from "@mui/icons-material/Mic";
 import "./Chat.css";
+import axios from "./axios";
+
 const Chat = ({ messages }) => {
   const [seed, setSeed] = useState("");
+  const [input, setInput] = useState("");
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    await axios.post("/messages/new", {
+      message: input,
+      name: "thewebdev",
+      timestamp: new Date().toUTCString(),
+      received: true,
+    });
+    setInput("");
+  };
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
   }, []);
@@ -50,8 +63,15 @@ b${seed}.svg`}
       <div className="chat__footer">
         <InsertEmoticon />
         <form>
-          <input placeholder="Type a message" type="text" />
-          <button type="submit">Send a message</button>
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Type a message"
+            type="text"
+          />
+          <button onClick={sendMessage} type="submit">
+            Send a message
+          </button>
         </form>
         <MicIcon />
       </div>
